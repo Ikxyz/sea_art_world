@@ -1,0 +1,102 @@
+@import "./color.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: Oxanium, sans-serif ;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100%;
+  background: #240E42 fixed;
+  background-repeat: no-repeat;
+  background-size: contain;
+  object-fit: fill;
+}
+
+
+div {
+  width: 100%;
+  // overflow: auto;
+  box-sizing: border-box !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+*,
+*::after,
+::before {
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  box-sizing: border-box !important;
+  word-wrap: break-word;
+}
+
+* {
+  font-family:  Oxanium, sans-serif ;
+  transition: all 200ms ease-in;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+.active {
+  color: $light !important;
+  background-color: $primary;
+}
+
+input {
+  width: 100%;
+  font-size: 14px;
+  padding: 18px 22px;
+  background-color: $grey_100;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  --tw-ring-shadow: 0 0 #000 !important;
+
+  :focus {
+    border: none;
+    outline: none;
+    box-shadow: 0 0 0 0 0px transparent;
+    outline-offset: 0px;
+    outline-style: none;
+    border: 0px;
+    --tw-ring-shadow: 0 0 #000 !important;
+  }
+
+  ::placeholder {
+    font-size: 14px;
+  }
+
+
+}
+
+
+.no-increment-indicator {
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}
