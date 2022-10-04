@@ -21,7 +21,7 @@ export function WalletSupport() {
                <img className="absolute left-0 -top-[100%] " src={Images.background.src} alt="wallet background image" />
 
                <header className="flex flex-col items-center w-full ">
-                    <h1 className="text-sm font-light text-transparent capitalize lg:text-xl w-fit bg-gradient-to-r from-white to-secodary bg-clip-text">Trade Wtih World's Most Trusted And Fastest Wallets</h1>
+                    <h1 className="text-sm font-light text-transparent capitalize lg:text-xl w-fit bg-gradient-to-r from-white to-secodary bg-clip-text">Trade Wtih World&#39;s Most Trusted And Fastest Wallets</h1>
                     <p className="text-4xl capitalize lg:text-5xl">Wallet We Support</p>
                </header>
                <ul className="flex content-around justify-around max-w-full mt-12 space-x-3 overflow-scroll ">

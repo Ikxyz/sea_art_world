@@ -12,6 +12,7 @@ import { useCurrenciesQuery } from "../services/currency";
 import { RootState } from '../store/index';
 import CButton from "../components/Button";
 import { Footer } from "../components/Footer";
+import ConnectWalletButton from "../components/ConnectWalletButton";
 
 const NavLinks = [
   { name: "Connect Wallet", route: "" },
@@ -64,7 +65,7 @@ export default function Layout({ children }: { children: any }) {
             </a>
           </Link>
 
-          <CButton text="Connect Wallet" center={false} />
+        <ConnectWalletButton/>
 
         </div>
         {/* Mobile SideBar */}

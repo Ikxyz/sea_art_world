@@ -1,6 +1,7 @@
 import Images from "../../assets/images";
 import Utils from "../../modules/utils";
 import CButton from "../Button";
+import ConnectWalletButton from "../ConnectWalletButton";
 
 export function Hero() {
      return <>
@@ -14,7 +15,7 @@ export function Hero() {
                          Buy and sell NFTs and browse our small scale<br /> collection of digital art and collectibles by top<br /> artists from around the world.
                     </p>
                     <br />
-                    <CButton text="Connect Wallet" center={false} />
+                    <ConnectWalletButton />
                </header>
                <div className="  w-full  relative h-[600px]">
                     <div className="bg-hero_bg  absolute text-center w-[320px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg p-3   rounded-[40px] top-0">

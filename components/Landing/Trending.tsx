@@ -8,13 +8,13 @@ export interface INFT {
 
 const NFTs: Array<INFT> = [
      { id: '1', timestamp: 0, wallet: 'hero image 1', image: Images.hero_art_1.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 2', image: Images.hero_art_2.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 3', image: Images.hero_art_3.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 4', image: Images.hero_art_4.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 5', image: Images.hero_art_5.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 6', image: Images.hero_art_6.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 7', image: Images.hero_art_7.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
-     { id: '1', timestamp: 0, wallet: 'hero image 8', image: Images.hero_art_8.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '2', timestamp: 0, wallet: 'hero image 2', image: Images.hero_art_2.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '3', timestamp: 0, wallet: 'hero image 3', image: Images.hero_art_3.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '4', timestamp: 0, wallet: 'hero image 4', image: Images.hero_art_4.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '5', timestamp: 0, wallet: 'hero image 5', image: Images.hero_art_5.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '6', timestamp: 0, wallet: 'hero image 6', image: Images.hero_art_6.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '7', timestamp: 0, wallet: 'hero image 7', image: Images.hero_art_7.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
+     { id: '8', timestamp: 0, wallet: 'hero image 8', image: Images.hero_art_8.src, amount: 4.89, amountInUsd: 654_874.86, author: 'JSmith', authorImg: Images.user.src, likes: 341, name: 'Monkey ape', quatity: 5 },
 
 ]
 export function Trending() {
@@ -28,7 +28,7 @@ export function Trending() {
                     <CButton text="View All" />
                </header>
                <ul className="relative grid max-w-full grid-cols-1 mt-12 space-x-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-content-around place-items-center gap-x-3 gap-y-8">
-                    {NFTs.map((e) => <li className="flex flex-col space-y-3 p-2 w-[276px] h-[389px] rounded-2xl  bg-wallet_bg relative">
+                    {NFTs.map((e) => <li key={e.id} className="flex flex-col space-y-3 p-2 w-[276px] h-[389px] rounded-2xl  bg-wallet_bg relative">
                          <div className="relative">
                               <img src={e.image} className="rounded-2xl  w-full h-[183px] object-cover" width="260" height="183" alt="hero image 1" />
                               <div className="absolute -top-0 right-0 w-[95px] h-[50px] flex items-center justify-center space-x-2 text-center rounded-bl-3xl backdrop-blur-md">

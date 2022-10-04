@@ -1,8 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TFiatMethodToFundAccount } from '../../components/FundAccount/FiatFunding';
-import { TMethodToWithdraw } from '../../components/Withdraw/Withdraw';
-import CompleteBuySellTransaction from '../../components/Buy_Sell/CompleteBuySellTransaction';
-import { TBuyOrSell } from '../../components/Buy_Sell/TransactionType';
 
 export type TDialogId = "fund_account" | "withdraw" | "calculator" | "swap" | "bill" | "airtime" | "pay_bills" | "crypto_funding" | "fiat_funding" | "fund_account_amount_via_fiat" | "withdraw_via_fiat" | "withdraw_via_crypto" | "add_wallet" | "redeem_voucher" | "complete_redeem_voucher" | "success" | "failed" | "select_transaction_type_buy_or_sell" | "select_coin_to_buy_or_sell" | "complete_buy_sell_transaction" | "confirm_buy_or_sell_transaction";
 
@@ -14,23 +10,16 @@ type TDialogKeyField = { [K in (TDialogId)]?: IDialogData }
 
 
 interface IDialogStateStrict extends TDialogKeyFieldStrict {
-    fund_account_amount_via_fiat: IDialogData<{ method: TFiatMethodToFundAccount }>;
-    withdraw_via_fiat: IDialogData<TMethodToWithdraw>;
-    withdraw_via_crypto: IDialogData<TMethodToWithdraw>;
+
     get_pin: IDialogData<{ pin: string | null }>;
-    complete_buy_sell_transaction: IDialogData<{ currency: string, transactionType: TBuyOrSell }>
-    confirm_buy_or_sell_transaction: IDialogData<{ currency: string, transactionType: TBuyOrSell, amount: string }>
+
     failed: IDialogData<{ title: string, desc: string }>,
     success: IDialogData<{ title: string, desc: string }>
 }
 
 interface IDialogState extends TDialogKeyField {
-    fund_account_amount_via_fiat?: IDialogData<{ method: TFiatMethodToFundAccount }>
-    withdraw_via_fiat?: IDialogData<TMethodToWithdraw>;
-    withdraw_via_crypto?: IDialogData<TMethodToWithdraw>;
+
     get_pin?: IDialogData<{ pin: string | null }>;
-    complete_buy_sell_transaction?: IDialogData<{ currency: string, transactionType: TBuyOrSell }>
-    confirm_buy_or_sell_transaction?: IDialogData<{ currency: string, transactionType: TBuyOrSell, amount: string }>
     failed?: IDialogData<{ title: string, desc: string }>,
     success?: IDialogData<{ title: string, desc: string }>
 }

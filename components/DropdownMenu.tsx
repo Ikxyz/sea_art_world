@@ -42,18 +42,19 @@ export default function DropdownMenu({ onSelected, items }: IProps) {
 
      return (
           <div className='relative w-[84px] h-[64px]'>
-               <div ref={dropdown as any} className="w-full h-full p-2 rounded-2xl bg-grey-100  flex  justify-between  items-center static ">
+               <div ref={dropdown as any} className="static flex items-center justify-between w-full h-full p-2 rounded-2xl bg-grey-100 ">
                     <div className={`text-xs content-between flex static justify-between cursor-pointer  items-center ${toggled ? 'hidden' : ''} `}>
+
                          {selected}
-                         <img
+                         {/* <img
                               src={Images.dropdown_arrow.src}
                               className="w-2 h-1"
                               alt="nigeria flag"
-                         />
+                         /> */}
 
                     </div>
                     <ul className={`absolute bg-white top-0  text-sm left-0 w-full h-fit text-center rounded-lg drop-shadow ${toggled ? '' : 'hidden'}`}>
-                         {items.map((item, index) => <li key={item} onClick={() => onItemSelected(item, index)} className="hover:bg-gray-300 p-2 cursor-pointer">{item}</li>)}
+                         {items.map((item, index) => <li key={item} onClick={() => onItemSelected(item, index)} className="p-2 cursor-pointer hover:bg-gray-300">{item}</li>)}
                     </ul>
                </div>
           </div>
