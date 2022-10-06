@@ -6,12 +6,7 @@ const Wallets: Array<{ wallet: string, image: string }> = [
      { wallet: 'Binance', image: Images.binance.src },
      { wallet: 'Trust Wallet', image: Images.trust_wallet.src },
      { wallet: 'Alpha', image: Images.alpha.src },
-     { wallet: 'CoinGecko', image: Images.coin_gecko.src },
-     { wallet: 'Metamask1', image: Images.meta_mask.src },
-     { wallet: 'Binance2', image: Images.binance.src },
-     { wallet: 'Trust Wallet3', image: Images.trust_wallet.src },
-     { wallet: 'Alpha4', image: Images.alpha.src },
-     { wallet: 'CoinGecko5', image: Images.coin_gecko.src }
+     { wallet: 'CoinGecko', image: Images.coin_gecko.src }
 ]
 
 

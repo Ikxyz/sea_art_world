@@ -36,7 +36,7 @@ function Dialog({ children, bringToFront = Date.now(), onClose, id }: IPram) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-50" />
+          <div className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-80" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-50 overflow-y-auto ">

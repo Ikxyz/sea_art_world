@@ -13,10 +13,15 @@ import { RootState } from '../store/index';
 import CButton from "../components/Button";
 import { Footer } from "../components/Footer";
 import ConnectWalletButton from "../components/ConnectWalletButton";
+import UploadNFTButton from "../components/UploadNFTButton";
 
 const NavLinks = [
-  { name: "Connect Wallet", route: "" },
-  { name: "My Gallery", route: "account", isDialog: true },
+
+  { name: "My Account", route: "account", isDialog: false, component: null, protected: true },
+
+  { name: "Gallery", route: "gallery", isDialog: false, component: null, protected: false },
+  { name: "Connect Wallet", route: "", component: <ConnectWalletButton />, isDialog: false, protected: false },
+  { name: "Upload NFT", route: "", component: <UploadNFTButton />, isDialog: false, protected: true },
   // { name: "Blog", route: "" },
   // { name: "NFT", route: "" },
   // { name: "P2P", route: "" },
@@ -64,12 +69,27 @@ export default function Layout({ children }: { children: any }) {
               />
             </a>
           </Link>
-
-        <ConnectWalletButton/>
+          <img
+            onClick={openAndCloseSideBar}
+            src={Images.sidebar_menu.src}
+            className="block w-8 h-5 md:hidden"
+            alt="sidebar menu"
+          />
 
         </div>
         {/* Mobile SideBar */}
-        {/* <Sidebar navLinks={NavLinks} /> */}
+        <Sidebar navLinks={NavLinks as any} />
+
+
+        <ul className="hidden space-x-10 md:flex">
+
+
+          {NavLinks.map((e) => (
+            <li key={e.name}>{e.component ? e.component : e.name}</li>
+          ))}
+        </ul>
+
+
 
         <main className="relative h-full ">{children}</main>
         {/* <Footer /> */}

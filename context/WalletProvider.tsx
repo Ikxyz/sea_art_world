@@ -1,14 +1,20 @@
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnect from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 
 interface IProps {
-
+     providers: Array<ethers.providers.Web3Provider>,
+     accounts: Array<String>,
+     updateProviders: (provider: ethers.providers.Web3Provider) => void
 }
 
-const initialState: IProps = {}
+const initialState: IProps = {
+     providers: [],
+     accounts: [],
+     updateProviders: null as any
+}
 
 const walletProvidersContext = createContext(initialState);
 
@@ -41,6 +47,7 @@ export const ConnectWallet = async () => {
           const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInatsnace);
 
           console.log(web3ModalProvider);
+          return web3ModalProvider;
      } catch (error) {
 
      }
@@ -51,7 +58,24 @@ export const useWalletProviders = () => useContext(walletProvidersContext);
 
 
 export default function WalletProvidersProvider({ children }: any) {
-     const value: IProps = { ...initialState, };
+
+     const [providers, setProviders] = useState<Array<ethers.providers.Web3Provider>>([]);
+
+     const [accounts, setAccounts] = useState<Array<String>>([]);
+
+
+
+     const updateProvider = (provider: ethers.providers.Web3Provider) => {
+          setProviders([provider]);
+     }
+
+     const value: IProps = { providers, accounts, updateProviders: updateProvider };
+
+     useEffect(() => {
+          if (providers.length > 0) {
+               providers[0].listAccounts().then(setAccounts);
+          }
+     }, [providers]);
 
      return <walletProvidersContext.Provider value={value}>
           {children}

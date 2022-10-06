@@ -60,12 +60,12 @@ ul {
   background-color: $primary;
 }
 
-input {
+input,select {
   width: 100%;
   font-size: 14px;
   padding: 18px 22px;
-  background-color: $grey_100;
-  border: none;
+  background-color: transparent;
+  border:  1px  solid $secondary;
   border-radius: 20px;
   outline: none;
   --tw-ring-shadow: 0 0 #000 !important;
