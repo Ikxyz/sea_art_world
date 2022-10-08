@@ -6,36 +6,14 @@ import RenderIf from "../components/RenderIf";
 import { useWalletProviders } from "../context/WalletProvider";
 import { RootState } from "../store";
 import { toggleSidebar } from "../store/slices/navigation";
+import MobileNavItem from "./mobile_nav_item";
 
 interface IPrams {
   navLinks: Array<{ name: string; route: string, component?: JSX.Element, protected: boolean }>;
 }
 
 
-function NavItem({ route, component, name, isProtected }: { route?: string, name: string, component?: JSX.Element, isProtected: boolean }) {
-  const router = useRouter();
-  const dispatch = useDispatch();
 
-  const { accounts } = useWalletProviders();
-
-  const openAndCloseSideBar = () => {
-    dispatch(toggleSidebar());
-  };
-  const onClick = () => {
-    openAndCloseSideBar();
-    if (!route) return;
-    router.push(route);
-  }
-  if (isProtected) {
-    if (!accounts || accounts.length === 0) {
-      return <></>
-    }
-  }
-
-  return <li onClick={onClick} className="p-4 text-lg text-white cursor-pointer" key={name + route}>
-    {component ? component : name}
-  </li>
-}
 
 function Sidebar({ navLinks }: IPrams) {
   const navigationState = useSelector((root: RootState) => root.navigation);
@@ -50,7 +28,7 @@ function Sidebar({ navLinks }: IPrams) {
   return (
     <div
       className={`${navigationState.isNaveOpen ? "flex" : "hidden"
-        } fixed    z-[200]       w-screen h-screen  lg:hidden    `}
+        } fixed    z-[200]       w-screen h-screen  xl:hidden    `}
     >
       <div onClick={openAndCloseSideBar} className="bg-black bg-opacity-80" />
       <div className="box-border relative px-6 py-6 ml-auto min-w-fit max-w-[320px]  bg-primary">
@@ -68,7 +46,7 @@ function Sidebar({ navLinks }: IPrams) {
         </RenderIf> */}
         <RenderIf isTrue={isLoggedIn === false}>
           <ul className="flex flex-col content-center justify-center my-16 list-none divide-y-2 divide-gray-500 w-fit divide-opacity-10">
-            {navLinks.map((e, i) => <NavItem key={e.route + i} name={e.name} component={e.component} route={e.route} isProtected={e.protected} />)}
+            {navLinks.map((e, i) => <MobileNavItem key={e.route + i} name={e.name} component={e.component} route={e.route} isProtected={e.protected} />)}
           </ul>
           {/* <MyAccount /> */}
         </RenderIf>

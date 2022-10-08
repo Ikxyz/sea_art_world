@@ -14,14 +14,15 @@ import CButton from "../components/Button";
 import { Footer } from "../components/Footer";
 import ConnectWalletButton from "../components/ConnectWalletButton";
 import UploadNFTButton from "../components/UploadNFTButton";
+import DesktopNavItem from "./desktop_nav_item";
 
 const NavLinks = [
 
-  { name: "My Account", route: "account", isDialog: false, component: null, protected: true },
+  { name: "My Account", route: "account", isDialog: false, protected: true },
 
-  { name: "Gallery", route: "gallery", isDialog: false, component: null, protected: false },
-  { name: "Connect Wallet", route: "", component: <ConnectWalletButton />, isDialog: false, protected: false },
-  { name: "Upload NFT", route: "", component: <UploadNFTButton />, isDialog: false, protected: true },
+  { name: "Gallery", route: "gallery", isDialog: false, protected: false },
+  { name: "Connect Wallet", route: "##", component: <ConnectWalletButton />, isDialog: false, protected: false },
+  { name: "Upload NFT", route: "#", component: <UploadNFTButton />, isDialog: false, protected: true },
   // { name: "Blog", route: "" },
   // { name: "NFT", route: "" },
   // { name: "P2P", route: "" },
@@ -59,12 +60,12 @@ export default function Layout({ children }: { children: any }) {
       <div className="relative w-full h-full ">
 
         {/* Desktop Nav Bar */}
-        <div className=" bg-nav_background backdrop-blur-xl lg:pl-[135px] px-[30px] py-[25px] z-20 flex content-between justify-between w-full ">
+        <div className=" bg-nav_background backdrop-blur-xl xl:pl-[135px] px-[30px] py-[25px] z-20 flex content-between justify-between w-full ">
           <Link href="/">
             <a>
               <img
                 src={Images.logo_full.src}
-                className="lg:h-[60px] h-[40px]"
+                className="xl:h-[60px] h-[40px]"
                 alt="tradefada logo"
               />
             </a>
@@ -72,22 +73,18 @@ export default function Layout({ children }: { children: any }) {
           <img
             onClick={openAndCloseSideBar}
             src={Images.sidebar_menu.src}
-            className="block w-8 h-5 md:hidden"
+            className="block w-8 h-5 lg:hidden"
             alt="sidebar menu"
           />
-
+          <ul className="items-center hidden space-x-10 text-white lg:flex">
+            {NavLinks.map((e) => <DesktopNavItem isProtected={e.protected} name={e.name} component={e.component} route={e.route} key={e.route + 'desktop-nav-item'} />)}
+          </ul>
         </div>
         {/* Mobile SideBar */}
         <Sidebar navLinks={NavLinks as any} />
 
 
-        <ul className="hidden space-x-10 md:flex">
 
-
-          {NavLinks.map((e) => (
-            <li key={e.name}>{e.component ? e.component : e.name}</li>
-          ))}
-        </ul>
 
 
 

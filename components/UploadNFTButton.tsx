@@ -1,7 +1,11 @@
 import { ethers } from "ethers";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { ConnectWallet, useWalletProviders } from "../context/WalletProvider";
+import { fAuth, FireBase, fStore } from "../firebase/config";
+import { uploadGalleryItem } from "../firebase/gallery";
 import OnInputChange from "../modules/inputEvent";
+import getIpInfo from "../modules/ip_lookup";
+import Utils from "../modules/utils";
 import { showNotification } from "../plugins/toast_notification";
 import CButton from "./Button";
 import Dialog from "./Dialog";
@@ -9,7 +13,8 @@ import RenderIf from "./RenderIf";
 
 
 interface IForm {
-     nftCount: number,
+     count: number,
+     amount: number,
      nft1: File,
      nft2?: File,
      nft3?: File,
@@ -17,18 +22,23 @@ interface IForm {
      nft5?: File,
 }
 
-const uploadFiles = async (files: Array<File>): Promise<Array<String>> => {
+const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
 
      if (files.length === 0) return [];
 
-     const upload = (file: File) => {
-
+     const upload = async (file: File) => {
+          return new Promise<string>(async (res, rej) => {
+               const name = Utils.uniqueId(12) + (file.name.split('.')[1] ?? '.jpg');
+               const task = fStore.ref().child('store/' + name).put(file);
+               task.on(FireBase.storage.TaskEvent.STATE_CHANGED, () => { }, async (err) => {
+                    rej(err);
+               }, async () => {
+                    const url = await task.snapshot.ref.getDownloadURL();
+                    res(url);
+               })
+          })
      }
-
-     const result = Promise.all([])
-
-
-     return [];
+     return await Promise.all(files.map(upload));;
 }
 
 
@@ -39,29 +49,43 @@ export default function UploadNFTButton() {
      const [isUploading, setIsUploading] = useState<boolean>(false);
 
 
-     const [form, setForm] = useState<IForm>({ nftCount: 1 } as any);
+     const [form, setForm] = useState<IForm>({ count: 1 } as any);
 
      const connetedAccountString = accounts.length > 0 ? accounts[0].substring(0, 10) : '';
      const onInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => OnInputChange(e, form, setForm);
 
 
+     const saveNft = async (nfts: Array<string>) => {
+          const ipInfo = await getIpInfo();
+          const user = fAuth.currentUser;
+          await uploadGalleryItem({ id: Utils.uniqueId(12), amount: form.amount, authorAddress: accounts[0] as string, authorUid: user?.uid ?? '', nfts,metadata:{ip:ipInfo} });
+          showNotification("NFT Miniting Complete")
+     }
+
      const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
           e.preventDefault();
 
-          if (!connetedAccountString) return console.log('connect wallet first');
+          if (!connetedAccountString) return showNotification('connect wallet to proccess transaction');
 
+          if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
           try {
-
                let tx = {
                     to: "0xb499Be8E8F98f37438F42158E1C7A153E3b57aBF",
-                    // Convert currency unit from ether to wei
-                    value: ethers.utils.parseEther("0.00036")
+                    value: ethers.utils.parseEther(form.amount.toString())
                }
                const signer = await providers[0].getSigner();
                const transaction = await signer.sendTransaction(tx);
 
-               console.log(transaction);
+               const newForm: any = {};
+               for (let index = 0; index < Number(form.count); index++) {
+                    const element = document.getElementById('nft' + (index + 1)) as any;
+                    newForm[`nft${index + 1}`] = element.files[0];
+               }
+               const nfts = await uploadFiles(Object.values(newForm))
+               await saveNft(nfts);
+
+               // console.log(transaction);
 
           } catch (error) {
                const err = error as any;
@@ -81,18 +105,18 @@ export default function UploadNFTButton() {
      const fileInputs = useMemo(() => {
           const inputs: Array<JSX.Element> = [];
 
-          for (let i = 0; i < form.nftCount; i++) {
+          for (let i = 0; i < form.count; i++) {
                let index = i + 1;
 
-               inputs.push(<div className="mb-3">
+               inputs.push(<div key={index + 'file-picker'} className="mb-3">
                     <label htmlFor={`nft${index}`}>Select your {index} NFT image</label>
-                    <input required type="file" accept=".jpg,.png,.jpeg" placeholder={`select your ${index} nft image`} id={`nft${index}`} name={`nft${index}`} />
+                    <input required type="file" accept=".jpg,.png,.jpeg" placeholder={`select your ${index} nft image`} id={`nft${index}`} name={`nft${index}`} onChange={onInputChange} />
                </div>)
 
           }
 
           return inputs;
-     }, [form.nftCount]);
+     }, [form.count]);
 
 
 
@@ -119,8 +143,8 @@ export default function UploadNFTButton() {
                                    <br />
                                    <br />
                                    <div>
-                                        <label htmlFor="nftCount">Select Numbers of NFT your will like to mint</label>
-                                        <select required name="nftCount" onChange={onInputChange} id="nftCount" placeholder="" className="" >
+                                        <label htmlFor="count">Select Numbers of NFT your will like to mint</label>
+                                        <select required name="count" onChange={onInputChange} id="count" placeholder="" className="" >
                                              <option value="1" >Only One NFT</option>
                                              <option value="2">I will like to mint two (2) NFTs</option>
                                              <option value="3">I will like to mint three (3) NFTs</option>
@@ -132,6 +156,13 @@ export default function UploadNFTButton() {
 
 
                                    {fileInputs}
+                                   <br />
+                                   <div>
+                                        <label htmlFor="amount">Enter the price of NFT below</label>
+                                        <input required name="amount" type="number" onChange={onInputChange} id="amount" placeholder="Amount in ETH" className="" />
+
+
+                                   </div>
                                    <br />
                                    <br />
 

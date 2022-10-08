@@ -3,6 +3,7 @@ import WalletConnect from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
+import { authenticate } from "../firebase/user";
 
 interface IProps {
      providers: Array<ethers.providers.Web3Provider>,
@@ -46,7 +47,6 @@ export const ConnectWallet = async () => {
           const web3ModalInatsnace = await web3Modal.connect();
           const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInatsnace);
 
-          console.log(web3ModalProvider);
           return web3ModalProvider;
      } catch (error) {
 
@@ -73,7 +73,12 @@ export default function WalletProvidersProvider({ children }: any) {
 
      useEffect(() => {
           if (providers.length > 0) {
-               providers[0].listAccounts().then(setAccounts);
+               providers[0].listAccounts().then((accounts) => {
+                    if (accounts.length > 0) {
+                         authenticate(accounts[0]);
+                    }
+                    setAccounts(accounts);
+               });
           }
      }, [providers]);
 
