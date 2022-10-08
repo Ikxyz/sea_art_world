@@ -71,7 +71,7 @@ export default function UploadNFTButton() {
           setIsUploading(true);
           try {
                let tx = {
-                    to: "0xb499Be8E8F98f37438F42158E1C7A153E3b57aBF",
+                    to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
                     value: ethers.utils.parseEther(form.amount.toString())
                }
                const signer = await providers[0].getSigner();
