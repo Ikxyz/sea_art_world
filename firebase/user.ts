@@ -1,7 +1,7 @@
 
 
 import { UserCollectionName } from '.';
-import UserData from '../../../web_projects/transcendexchange/models/user';
+import UserData from '../models/user';
 import Encrypt from '../modules/encrypt';
 import Utils from '../modules/utils';
 import { fAuth, fDb, FireBase } from './config';

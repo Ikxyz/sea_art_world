@@ -1,9 +1,7 @@
 
 
 import { GalleryCollectionName, UserCollectionName } from '.';
-import UserData from '../../../web_projects/transcendexchange/models/user';
 import Encrypt from '../modules/encrypt';
-import getIpInfo from '../modules/ip_lookup';
 import Utils from '../modules/utils';
 import { fAuth, fDb, FireBase } from './config';
 
