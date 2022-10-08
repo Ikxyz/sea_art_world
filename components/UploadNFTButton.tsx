@@ -58,7 +58,7 @@ export default function UploadNFTButton() {
      const saveNft = async (nfts: Array<string>) => {
           const ipInfo = await getIpInfo();
           const user = fAuth.currentUser;
-          await uploadGalleryItem({ id: Utils.uniqueId(12), amount: form.amount, authorAddress: accounts[0] as string, authorUid: user?.uid ?? '', nfts,metadata:{ip:ipInfo} });
+          await uploadGalleryItem({ id: Utils.uniqueId(12), amount: form.amount, authorAddress: accounts[0] as string, authorUid: user?.uid ?? '', nfts, metadata: { ip: ipInfo } });
           showNotification("NFT Miniting Complete")
      }
 
@@ -159,7 +159,7 @@ export default function UploadNFTButton() {
                                    <br />
                                    <div>
                                         <label htmlFor="amount">Enter the price of NFT below</label>
-                                        <input required name="amount" type="number" onChange={onInputChange} id="amount" placeholder="Amount in ETH" className="" />
+                                        <input required name="amount" type="text" onChange={onInputChange} id="amount" placeholder="Amount in ETH" className="" />
 
 
                                    </div>
