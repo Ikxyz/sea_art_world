@@ -1,4 +1,4 @@
-import { response } from './auth.d';
+import { response } from './auth';
 import { HttpStandardResponse } from './index';
 import { IUser } from "../user";
 

@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import EndPoints from '../constants/endpoints';
 import BaseQuery from './base';
-import ICurrencyRequest from '../interfaces/http/currency';
+import ICurrencyRequest from '../@types/http/currency';
 import { setCurrencies } from '../store/slices/wallet';
 
 

@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import EndPoints from "../constants/endpoints";
-import IAuthRequestBody from "../interfaces/http/auth";
+import IAuthRequestBody from "../@types/http/auth";
 import BaseQuery from "./base";
 
 

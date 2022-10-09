@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import EndPoints from "../constants/endpoints";
-import ITransactionRequestBody from "../interfaces/http/transaction";
+import ITransactionRequestBody from "../@types/http/transaction";
 import BaseQuery from "./base";
 
 const Urls = EndPoints.Transaction;

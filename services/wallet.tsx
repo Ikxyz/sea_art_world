@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import EndPoints from "../constants/endpoints";
-import IWalletRequestBody from "../interfaces/http/wallet";
+import IWalletRequestBody from "../@types/http/wallet";
 import BaseQuery from './base';
-import { HttpStandardResponse } from '../interfaces/http/index';
+import { HttpStandardResponse } from '../@types/http/index';
 import IWallet from '../interfaces/wallet';
 import { RootState } from '../store/index';
 import { setUserWallets, setUserWalletsBalances } from "../store/slices/wallet";

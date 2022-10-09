@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import EndPoints from "../constants/endpoints";
-import IOtpRequestBody from '../interfaces/http/otp';
+import IOtpRequestBody from '../@types/http/otp';
 import BaseQuery from "./base";
 
 

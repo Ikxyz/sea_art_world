@@ -1,4 +1,4 @@
-import { response } from './auth.d';
+import { response } from './auth';
 import { HttpStandardResponse } from './index';
 import ICurrency from '../currency';
 namespace ICurrencyRequest {

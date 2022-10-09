@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import BaseQuery from "./base";
 import EndPoints from '../constants/endpoints';
-import IConfigRequest from "../interfaces/http/config";
+import IConfigRequest from "../@types/http/config";
 
 
 const Urls = EndPoints.Config;

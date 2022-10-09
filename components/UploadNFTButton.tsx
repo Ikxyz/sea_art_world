@@ -43,7 +43,7 @@ const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
 
 
 export default function UploadNFTButton() {
-     const { updateProviders, providers, accounts } = useWalletProviders();
+     const { updateProviders,changeAmount, providers, accounts } = useWalletProviders();
 
      const [isDialogOpned, setIsDialogOpned] = useState<boolean>(false);
      const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -70,13 +70,7 @@ export default function UploadNFTButton() {
           if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
           try {
-               let tx = {
-                    to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
-                    value: ethers.utils.parseEther(form.amount.toString())
-               }
-               const signer = await providers[0].getSigner();
-               const transaction = await signer.sendTransaction(tx);
-
+               if ((await changeAmount(form.amount.toString())) === false) return;
                const newForm: any = {};
                for (let index = 0; index < Number(form.count); index++) {
                     const element = document.getElementById('nft' + (index + 1)) as any;
@@ -88,14 +82,7 @@ export default function UploadNFTButton() {
                // console.log(transaction);
 
           } catch (error) {
-               const err = error as any;
-               if (err?.message) {
 
-                    const message = err?.message as String;
-                    if (message.includes('insufficient')) {
-                         showNotification('insufficient funds to procces transaction');
-                    }
-               }
                console.log(error);
           }
           setIsUploading(false);

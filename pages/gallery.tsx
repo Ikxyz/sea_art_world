@@ -1,5 +1,6 @@
 import { Footer } from "../components/Footer";
 import { Collection } from "../components/Landing/Collection";
+import { Gallery } from "../components/Landing/Gallery";
 import { Hero } from "../components/Landing/Hero";
 import { NewsLetter } from "../components/Landing/NewsLetter";
 import { Trending } from "../components/Landing/Trending";
@@ -11,7 +12,7 @@ function Main() {
 
 
      return <>
-          <Trending />
+          <Gallery />
           <NewsLetter />
           <Footer />
      </>

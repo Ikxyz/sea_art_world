@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import EndPoints from '../constants/endpoints';
-import ILocationRequestBody from '../interfaces/http/location';
+import ILocationRequestBody from '../@types/http/location';
 
 
 const Urls = EndPoints.Location;

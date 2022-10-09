@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import EndPoints from "../constants/endpoints";
-import IVoucherRequestBody from "../interfaces/http/voucher";
+import IVoucherRequestBody from "../@types/http/voucher";
 import BaseQuery from "./base";
 
 

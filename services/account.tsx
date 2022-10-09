@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 import EndPoints from "../constants/endpoints";
-import IAccountRequestEndpoint from "../interfaces/http/account";
+import IAccountRequestEndpoint from "../@types/http/account";
 
 
 const Urls = EndPoints.Account;
