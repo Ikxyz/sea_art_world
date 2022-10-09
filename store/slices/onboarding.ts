@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import IAuthRequestBody from '../../@types/http/auth';
-import { IUser } from '../../interfaces/user';
+import { IUser } from '../../@types/user';
 
 export type TOnboardingSteps = "create-account" | "phone-verification" | "email-verification" | "setup-pin" | "repeat-pin" | "welcome" | "existing-account" | "login"
 

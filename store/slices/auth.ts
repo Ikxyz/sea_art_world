@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from '../../interfaces/user';
 import onBoardingSlice, { gotoEmailVerification, gotoPhoneNumberVerification, gotoSetupPin } from './onboarding';
 import Encrypt from '../../modules/encrypt';
+import { IUser } from "../../@types/user";
 
 
 interface IAuthState {

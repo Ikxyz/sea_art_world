@@ -8,8 +8,6 @@ import onDialogsReducer from "./slices/dialogs";
 import navigationReducer from "./slices/navigation";
 import onBoardingReducer from "./slices/onboarding";
 import CurrencyApi from '../services/currency';
-import WalletApi from '../services/wallet';
-import walletReducer from "./slices/wallet";
 import TransactionApi from '../services/transaction';
 
 const store = configureStore({
@@ -18,15 +16,13 @@ const store = configureStore({
         navigation: navigationReducer,
         onBoarding: onBoardingReducer,
         dialogs: onDialogsReducer,
-        wallet: walletReducer,
         [AuthApi.reducerPath]: AuthApi.reducer,
         [ConfigApi.reducerPath]: ConfigApi.reducer,
         [CurrencyApi.reducerPath]: CurrencyApi.reducer,
         [OtpApi.reducerPath]: OtpApi.reducer,
-        [WalletApi.reducerPath]: WalletApi.reducer,
         [TransactionApi.reducerPath]: TransactionApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(AuthApi.middleware).concat(ConfigApi.middleware).concat(CurrencyApi.middleware).concat(OtpApi.middleware).concat(WalletApi.middleware).concat(TransactionApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(AuthApi.middleware).concat(ConfigApi.middleware).concat(CurrencyApi.middleware).concat(OtpApi.middleware).concat(TransactionApi.middleware),
 
 })
 

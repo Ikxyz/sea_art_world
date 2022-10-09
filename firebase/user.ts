@@ -1,7 +1,6 @@
 
-
+import UserModel from '../@types/user';
 import { UserCollectionName } from '.';
-import UserData from '../models/user';
 import Encrypt from '../modules/encrypt';
 import Utils from '../modules/utils';
 import { fAuth, fDb, FireBase } from './config';
@@ -40,7 +39,7 @@ export const cerateAccountWithWalletAddress = async (address: string) => {
   const credentials = FireBase.auth.EmailAuthProvider.credential(email, pwd);
   const user = await fAuth.currentUser?.linkWithCredential(credentials);
   if (!user || !user.user) return;
-  const userData: UserData = {
+  const userData: UserModel = {
     firstName: "",
     lastName: "",
     email: email,
@@ -55,16 +54,16 @@ export const logintWithWalletAddress = async (address: string) => {
   const [email, pwd] = getLoginCredencails(address);
   return await fAuth.signInWithEmailAndPassword(email, pwd);
 }
-export const fetchUser = async (uid: string): Promise<UserData | null> => {
+export const fetchUser = async (uid: string): Promise<UserModel | null> => {
   const userDoc = await fDb.collection(UserCollectionName).doc(uid).get();
   if (!userDoc.exists) return null;
-  return userDoc.data() as UserData;
+  return userDoc.data() as UserModel;
 };
 
-export const fetchUserByAddress = async (address: string): Promise<UserData | null> => {
+export const fetchUserByAddress = async (address: string): Promise<UserModel | null> => {
   const userDoc = await fDb.collection(UserCollectionName).where('wallet', '==', address).get();
   if (userDoc.size === 0) return null;
-  return userDoc.docs[0].data() as UserData;
+  return userDoc.docs[0].data() as UserModel;
 };
 
 export const $UpdateUserDoc = async (uid: string, data: any) => {
