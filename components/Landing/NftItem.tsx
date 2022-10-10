@@ -41,13 +41,13 @@ export default function NftItem({ nft }: { nft: IGallery }) {
                          <p>{nft.likes}</p>
                     </div>
                </div>
-               <div className="flex flex-row px-5 space-x-4">
+               {/* <div className="flex flex-row px-5 space-x-4">
                     <img src={Images.user.src} className="rounded-[50%] w-[40px] h-[40px]" width="40" height="40" alt="profile picture" />
                     <div className="flex-grow">
                          <h3 className="text-2xl">{nft.name}</h3>
                          <p >By @{nft.author.substring(0, 8)}</p>
                     </div>
-               </div>
+               </div> */}
                <div className="flex flex-row items-start content-between justify-between px-5 space-x-4">
                     <h6 className="min-w-max ">On Sale</h6>
                     <img src={Images.fire.src} className="w-[20px] h-[20px] mt-1" width="20" height="20" alt="hot deal" />

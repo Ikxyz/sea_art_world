@@ -19,7 +19,7 @@ export function WalletSupport() {
                     <h1 className="text-sm font-light text-transparent capitalize lg:text-xl w-fit bg-gradient-to-r from-white to-secodary bg-clip-text">Trade Wtih World&#39;s Most Trusted And Fastest Wallets</h1>
                     <p className="text-4xl capitalize lg:text-5xl">Wallet We Support</p>
                </header>
-               <ul className="flex content-around justify-around max-w-full mt-12 space-x-3 overflow-scroll ">
+               <ul className="flex content-around justify-around max-w-full min-w-full mt-12 space-x-3 overflow-scroll overflow-x-scroll ">
                     {Wallets.map((e) => <li key={e.wallet} className="min-w-[198px] min-h-[243px]  hover:bg-opacity-10 bg-wallet_bg  bg-opacity-10 text-center rounded-2xl  p-6">
                          <div className="bg-wallet_bg w-fit p-8 rounded-[50%]">
                               <img src={e.image} className="mx-auto" width="82" alt="trust wallet" />
