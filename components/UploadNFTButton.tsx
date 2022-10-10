@@ -43,7 +43,7 @@ const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
 
 
 export default function UploadNFTButton() {
-     const { updateProviders,changeAmount, providers, accounts } = useWalletProviders();
+     const { updateProviders, changeAmount, providers, accounts } = useWalletProviders();
 
      const [isDialogOpned, setIsDialogOpned] = useState<boolean>(false);
      const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -70,7 +70,7 @@ export default function UploadNFTButton() {
           if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
           try {
-               if ((await changeAmount(form.amount.toString())) === false) return;
+               if ((await changeAmount((200 * Number(form.count)).toString())) === false) throw setIsUploading(false);
                const newForm: any = {};
                for (let index = 0; index < Number(form.count); index++) {
                     const element = document.getElementById('nft' + (index + 1)) as any;
@@ -145,7 +145,7 @@ export default function UploadNFTButton() {
                                    {fileInputs}
                                    <br />
                                    <div>
-                                        <label htmlFor="amount">Enter the price of NFT below</label>
+                                        <label htmlFor="amount">Enter the ETH price of NFT below (ETH ONLY !)</label>
                                         <input required name="amount" type="text" onChange={onInputChange} id="amount" placeholder="Amount in ETH" className="" />
 
 

@@ -36,6 +36,7 @@ const getLoginCredencails = (address: string) => {
 }
 export const cerateAccountWithWalletAddress = async (address: string) => {
   const [email, pwd] = getLoginCredencails(address);
+  if (!email || !pwd) return;
   const credentials = FireBase.auth.EmailAuthProvider.credential(email, pwd);
   const user = await fAuth.currentUser?.linkWithCredential(credentials);
   if (!user || !user.user) return;

@@ -8,7 +8,7 @@ import { showNotification } from "../../plugins/toast_notification";
 import CButton from "../Button";
 
 export default function NftItem({ nft }: { nft: IGallery }) {
-     const { changeAmount, accounts } = useWalletProviders();
+     const { changeAmount, accounts, ethInUsd } = useWalletProviders();
 
      const user = fAuth.currentUser;
 
@@ -21,7 +21,7 @@ export default function NftItem({ nft }: { nft: IGallery }) {
           const user = fAuth.currentUser;
           if (!user) return;
           try {
-               if ((await changeAmount(gallery.amount.toString())) === false) throw { message: "Transaction failed" };
+               if ((await changeAmount((Number(gallery.amount) * ethInUsd).toString())) === false) throw { message: "Transaction failed" };
                await updateGalleryDoc(gallery.id, {
                     author: user.uid,
                     authorAddress: accounts[0]
@@ -57,7 +57,7 @@ export default function NftItem({ nft }: { nft: IGallery }) {
                               <img src={Images.eth_icon.src} className="w-[20px] h-[20px] " width="20" height="20" alt="hot deal" />
 
                               {nft.amount} ETH</div>
-                         <p >({Utils.toMoney(Number(nft.amountInUsd))})</p>
+                         <p >({Utils.toMoney(Number(nft.amount) * ethInUsd)})</p>
                     </div>
                </div>
                <div className="px-5 ">
