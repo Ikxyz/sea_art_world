@@ -23,11 +23,6 @@ const initialState: IProps = {
      changeAmount: null as any,
      updateProviders: null as any
 }
-
-export const MINT_AMOUNT_IN_USD = 0.01;
-
-const walletProvidersContext = createContext(initialState);
-
 const web3ProviderOptions = {
      coinbasewallet: {
           package: CoinbaseWalletSDK,
@@ -46,13 +41,20 @@ const web3ProviderOptions = {
      },
 };
 
+
+
+export const MINT_AMOUNT_IN_USD = 0.01;
+
+const walletProvidersContext = createContext(initialState);
+
+
+
 export const ConnectWallet = async () => {
      try {
           const web3Modal = new Web3Modal({
                cacheProvider: false,
                providerOptions: web3ProviderOptions,
           })
-
           const web3ModalInatsnace = await web3Modal.connect();
           const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInatsnace);
 
@@ -79,12 +81,16 @@ export default function WalletProvidersProvider({ children }: any) {
           try {
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
                console.log(amount, amountInEth.toFixed(8));
+               const accounts = await providers[0].listAccounts();
                let tx = {
                     to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
-                    value: ethers.utils.parseEther(amountInEth.toFixed(8))
+                    value: ethers.utils.parseEther(amountInEth.toFixed(8)),
                }
                const signer = await providers[0].getSigner();
-               const tss = await signer.sendTransaction(tx);
+
+               let gasLimit = await signer.estimateGas(tx);
+               // const singed = await providers[0].call({ ...tx, from: accounts[0], });
+               const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
                console.log(tss)
                return true;
           } catch (error) {
