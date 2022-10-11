@@ -37,7 +37,7 @@ const web3ProviderOptions = {
      walletconnect: {
           package: WalletConnect,
           options: {
-               infuraId: "https://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae",
+               infuraId: "wss://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae",
                rpc: {
                     56: 'https://bsc-dataseed1.binance.org'
                },
