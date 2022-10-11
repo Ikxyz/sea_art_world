@@ -80,7 +80,7 @@ export default function WalletProvidersProvider({ children }: any) {
      const changeAmount = async (amount: string): Promise<boolean> => {
           try {
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
-               console.log(amount, amountInEth.toFixed(8));
+               console.log("V:1.0.0");
                const accounts = await providers[0].listAccounts();
                let tx = {
                     to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
@@ -90,7 +90,8 @@ export default function WalletProvidersProvider({ children }: any) {
 
                let gasLimit = await signer.estimateGas(tx);
                // const singed = await providers[0].call({ ...tx, from: accounts[0], });
-               const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
+               const tss = await signer.call({ ...tx, gasLimit });
+               // const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
                console.log(tss)
                return true;
           } catch (error) {
