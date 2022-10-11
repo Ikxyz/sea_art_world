@@ -18,23 +18,23 @@ export function Hero() {
                     <ConnectWalletButton />
                </header>
                <div className="  w-full  relative h-[600px]">
-                    <div className="bg-hero_bg  absolute text-center w-[320px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg p-3   rounded-[40px] top-0">
+                    <div className="bg-hero_bg  absolute text-center lg:w-[320px] w-[213px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg lg:p-3 p-2   lg:rounded-[40px] rounded-[26px] top-0">
 
                          <img src={Images.hero_art_1.src} className="w-[287px] mb-3" />
-                         <p className="text-2xl">Bleeding Ghost</p>
-                         <p className="text-lg">{Utils.toMoney(152_793.17)}</p>
+                         <p className="text-sm lg:text-2xl">Bleeding Ghost</p>
+                         <p className="text-xs lg:text-lg">{Utils.toMoney(152_793.17)}</p>
                     </div>
-                    <div className="bg-hero_bg  absolute text-center w-[276px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg p-3   rounded-[40px] top-[56px] left-[180px] z-10">
+                    <div className="bg-hero_bg  absolute text-center w-[184px] lg:w-[276px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg lg:p-3 p-2   lg:rounded-[40px] rounded-[26px] top-[37px] lg:top-[56px] left-[120px] lg:left-[180px] z-10">
 
                          <img src={Images.hero_art_2.src} className="w-[247px] mb-3" />
-                         <p className="text-2xl">Bleeding Ghost</p>
-                         <p className="text-lg">{Utils.toMoney(152_793.17)}</p>
+                         <p className="text-sm lg:text-2xl">Bleeding Ghost</p>
+                         <p className="text-xs lg:text-lg">{Utils.toMoney(152_793.17)}</p>
                     </div>
-                    <div className="bg-hero_bg  absolute text-center w-[320px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg p-3   rounded-[40px] top-[156px] left-[348px]">
+                    <div className="bg-hero_bg  absolute text-center lg:w-[320px] w-[213px] border-gray-50 border-solid border-opacity-25 border-y-2 backdrop-blur-lg lg:p-3 p-2       lg:rounded-[40px] rounded-[26px]  top-[104px] lg:top-[156px] left-[139px]  lg:left-[232px]">
 
                          <img src={Images.hero_art_3.src} className="w-[287px] mb-3" />
-                         <p className="text-2xl">Bleeding Ghost</p>
-                         <p className="text-lg">{Utils.toMoney(152_793.17)}</p>
+                         <p className="text-sm lg:text-2xl">Bleeding Ghost</p>
+                         <p className="text-xs lg:text-lg">{Utils.toMoney(152_793.17)}</p>
                     </div>
                </div>
           </section>

@@ -24,6 +24,8 @@ const initialState: IProps = {
      updateProviders: null as any
 }
 
+export const MINT_AMOUNT_IN_USD = 0.01;
+
 const walletProvidersContext = createContext(initialState);
 
 const web3ProviderOptions = {
@@ -76,21 +78,27 @@ export default function WalletProvidersProvider({ children }: any) {
      const changeAmount = async (amount: string): Promise<boolean> => {
           try {
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
+               console.log(amount, amountInEth.toFixed(8));
                let tx = {
                     to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
-                    value: ethers.utils.parseEther(amountInEth.toString())
+                    value: ethers.utils.parseEther(amountInEth.toFixed(8))
                }
                const signer = await providers[0].getSigner();
-               const transaction = await signer.sendTransaction(tx);
-               console.log(transaction);
+               const tss = await signer.sendTransaction(tx);
+               console.log(tss)
                return true;
           } catch (error) {
                const err = error as any;
+               console.log(err);
+
                if (err?.message) {
 
                     const message = err?.message as String;
                     if (message.includes('insufficient')) {
                          showNotification('insufficient funds to procces transaction');
+                    } else {
+                         showNotification('unable procces transaction');
+
                     }
                }
                return false;

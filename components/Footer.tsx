@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Images from "../assets/images";
 
 export function Footer() {
@@ -21,7 +22,7 @@ export function Footer() {
                               </div>
                          </header>
                     </li>
-                    <li >
+                    {/* <li >
                          <h3 className="text-2xl font-extrabold text-white">About</h3>
                          <ul>
                               <li>About NFT</li>
@@ -29,14 +30,14 @@ export function Footer() {
                               <li>NFT Blog</li>
                               <li>Activity</li>
                          </ul>
-                    </li>
+                    </li> */}
                     <li >
                          <h3 className="text-2xl font-extrabold text-white">Support</h3>
                          <ul>
                               <li>Help $ Support</li>
-                              <li>Item Details</li>
-                              <li>Author Profile</li>
-                              <li>Collection</li>
+                              {/* <li>Item Details</li> */}
+                              {/* <li>Author Profile</li> */}
+                              <li><Link href="/gallery"><a>Collection</a></Link></li>
                          </ul>
                     </li>
                </ul>

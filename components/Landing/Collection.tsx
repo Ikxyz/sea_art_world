@@ -20,13 +20,15 @@ export function Collection() {
                     <p className="text-5xl capitalize">Our collection</p>
                </header>
                <ul className="relative flex content-around justify-around max-w-full mt-12 space-x-3 overflow-x-auto scroll-m-5 ">
-                    <img src={Images.hero_art_9.src} className="relative left-[330px] top-20 w-[184px] h-[245px] " width="82" alt="hero image 1" />
-                    <img src={Images.hero_art_7.src} className="relative left-[215px] top-16 w-[233px] h-[310px]  " width="82" alt="hero image 2" />
-                    <img src={Images.hero_art_6.src} className="relative left-[100px] top-10 w-[284px] h-[379px]" width="82" alt="hero image 3" />
-                    <img src={Images.hero_art_4.src} className="z-40 w-[333px] h-[445px]" width="82" alt="hero image 4" />
-                    <img src={Images.hero_art_5.src} className="relative  z-30 right-[100px] top-10   w-[284px] h-[379px]" width="82" alt="hero image 5" />
-                    <img src={Images.hero_art_8.src} className="relative z-20 right-[215px] top-16  w-[233px] h-[310px]" width="82" alt="hero image 6" />
-                    <img src={Images.hero_art_3.src} className="relative z-10 right-[330px] top-20   w-[184px] h-[245px]" width="82" alt="hero image 7" />
+                    <img src={Images.hero_art_9.src} className="relative left-[110px] top-[26px]     lg:left-[330px] lg:top-[80px] w-[61px] h-[81px] lg:w-[184px] lg:h-[245px] " width="82" alt="hero image 1" />
+                    <img src={Images.hero_art_7.src} className="relative left-[71px] top-[21px]      lg:left-[215px] lg:top-[64px] w-[77px] h-[103px] lg:w-[233px] lg:h-[310px]  " width="82" alt="hero image 2" />
+                    <img src={Images.hero_art_6.src} className="relative left-[33px] top-[13px]      lg:left-[100px] lg:top-[40px] w-[94px] h-[126px] lg:w-[284px] lg:h-[379px]" width="82" alt="hero image 3" />
+
+                    <img src={Images.hero_art_4.src} className="z-40 w-[111px] h-[148px] lg:w-[333px] lg:h-[445px]" width="82" alt="hero image 4" />
+
+                    <img src={Images.hero_art_5.src} className="relative  z-30 right-[33px] top-[13px]      lg:right-[100px] lg:top-[40px]    w-[94px] h-[126px] lg:w-[284px] lg:h-[379px]" width="82" alt="hero image 5" />
+                    <img src={Images.hero_art_8.src} className="relative z-20 right-[71px] top-[21px]      lg:right-[215px] lg:top-[64px]    w-[77px] h-[103px]   lg:w-[233px] lg:h-[310px]" width="82" alt="hero image 6" />
+                    <img src={Images.hero_art_3.src} className="relative z-10 right-[110px] top-[26px]     lg:right-[330px] lg:top-[80px]     w-[61px] h-[81px]  lg:w-[184px] lg:h-[245px]" width="82" alt="hero image 7" />
                </ul>
           </section>
      </>

@@ -48,9 +48,9 @@ export default function NftItem({ nft }: { nft: IGallery }) {
                          <p >By @{nft.author.substring(0, 8)}</p>
                     </div>
                </div> */}
-               <div className="flex flex-row items-start content-between justify-between px-5 space-x-4">
+               <div className="flex flex-row items-start content-start justify-start px-5 space-x-4 align-top">
                     <h6 className="min-w-max ">On Sale</h6>
-                    <img src={Images.fire.src} className="w-[20px] h-[20px] mt-1" width="20" height="20" alt="hot deal" />
+                    <img src={Images.fire.src} className="w-[20px] h-[20px]  " width="20" height="20" alt="hot deal" />
                     <div className="flex-grow text-end">
 
                          <div className="flex flex-row items-center content-end justify-end flex-grow w-full text-xl ">

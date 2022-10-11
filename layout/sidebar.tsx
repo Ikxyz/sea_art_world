@@ -28,7 +28,7 @@ function Sidebar({ navLinks }: IPrams) {
   return (
     <div
       className={`${navigationState.isNaveOpen ? "flex" : "hidden"
-        } fixed    z-[200]       w-screen h-screen  xl:hidden    `}
+        } fixed    z-[200]       w-screen h-screen  lg:hidden    `}
     >
       <div onClick={openAndCloseSideBar} className="bg-black bg-opacity-80" />
       <div className="box-border relative px-6 py-6 ml-auto min-w-fit max-w-[320px]  bg-primary">

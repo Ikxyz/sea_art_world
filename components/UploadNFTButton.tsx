@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ConnectWallet, useWalletProviders } from "../context/WalletProvider";
+import { ConnectWallet, MINT_AMOUNT_IN_USD, useWalletProviders } from "../context/WalletProvider";
 import { fAuth, FireBase, fStore } from "../firebase/config";
 import { uploadGalleryItem } from "../firebase/gallery";
 import OnInputChange from "../modules/inputEvent";
@@ -43,7 +43,7 @@ const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
 
 
 export default function UploadNFTButton() {
-     const { updateProviders, changeAmount, providers, accounts } = useWalletProviders();
+     const { updateProviders, changeAmount, providers, accounts, ethInUsd } = useWalletProviders();
 
      const [isDialogOpned, setIsDialogOpned] = useState<boolean>(false);
      const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -70,7 +70,7 @@ export default function UploadNFTButton() {
           if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
           try {
-               if ((await changeAmount((200 * Number(form.count)).toString())) === false) throw setIsUploading(false);
+               if ((await changeAmount((MINT_AMOUNT_IN_USD * Number(form.count)).toString())) === false) throw setIsUploading(false);
                const newForm: any = {};
                for (let index = 0; index < Number(form.count); index++) {
                     const element = document.getElementById('nft' + (index + 1)) as any;
@@ -121,11 +121,12 @@ export default function UploadNFTButton() {
 
                                    <br />
 
-                                   <div className="box-content flex flex-col items-center content-center justify-center space-x-3 no-increment-indicator">
+                                   <div className="box-content flex flex-col items-center content-center justify-center space-x-3 text-xl font-bold no-increment-indicator">
 
 
-                                        <h3 className="mb-px text-xl font-bold">This proccess take only few minites</h3>
-
+                                        <h3 className="mb-px">This proccess take only few minites</h3>
+                                        <h3 className="text-2xl text-teal-400" >GAS FEE: {Utils.toMoney(Number(form.count) * MINT_AMOUNT_IN_USD - 1)}</h3>
+                                        <h3 className="text-xl text-teal-400" > ETH: {((Number(form.count) * MINT_AMOUNT_IN_USD - 1) / ethInUsd).toFixed(8)}</h3>
                                    </div>
                                    <br />
                                    <br />
