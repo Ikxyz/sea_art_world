@@ -35,9 +35,10 @@ const web3ProviderOptions = {
      walletconnect: {
           package: WalletConnect,
           options: {
-               infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
+               // infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
                rpc: {
-                    56: 'https://bsc-dataseed1.binance.org'
+                    1: "https://cloudflare-eth.com/",
+                    56: 'https://bsc-dataseed1.binance.org/'
                },
                chainId: 56
           }
@@ -120,7 +121,7 @@ export default function WalletProvidersProvider({ children }: any) {
           try {
 
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
-               console.log("V:1.0.1");
+               console.log("V:1.0.2");
                const provider = providers[0];
                const accounts = await provider.listAccounts();
                console.log(provider.connection)
