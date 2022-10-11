@@ -121,7 +121,7 @@ export default function WalletProvidersProvider({ children }: any) {
           try {
 
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
-               console.log("V:1.0.2");
+               console.log("V:1.0.5");
                const provider = providers[0];
                const accounts = await provider.listAccounts();
                console.log(provider.connection)
@@ -131,16 +131,16 @@ export default function WalletProvidersProvider({ children }: any) {
                     value: ethers.utils.parseEther(amountInEth.toFixed(8)),
                }
 
-               const singed = providers[0].getUncheckedSigner(accounts[0]);
-               let gasLimit = await singed.estimateGas(tx);
+               // const singed = providers[0].getUncheckedSigner(accounts[0]);
+               // let gasLimit = await singed.estimateGas(tx);
 
-               const tss = await singed.signTransaction({ ...tx, gasLimit })
-               // const signer = await providers[0].getSigner();
+               // const tss = await singed.signTransaction({ ...tx, gasLimit })
+               const signer = await provider.getSigner();
 
-               // let gasLimit = await signer.estimateGas(tx);
+               let gasLimit = await signer.estimateGas(tx);
                // const singed = await providers[0].call({ ...tx, from: accounts[0], });
                // const tss = await signer.call({ ...tx, gasLimit });
-               // const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
+               const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
                console.log(tss)
                return true;
           } catch (error) {
