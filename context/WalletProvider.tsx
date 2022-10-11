@@ -1,5 +1,8 @@
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import { providers } from "ethers";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletConnect from "@walletconnect/web3-provider";
+import Web3 from "web3";
 import { ethers } from "ethers";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
@@ -24,15 +27,15 @@ const initialState: IProps = {
      updateProviders: null as any
 }
 const web3ProviderOptions = {
-     coinbasewallet: {
-          package: CoinbaseWalletSDK,
-          appName: "Sea World Art",
-          infuraId: { 3: "https://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae" }
-     },
+     // coinbasewallet: {
+     //      package: CoinbaseWalletSDK,
+     //      appName: "Sea World Art",
+     //      infuraId: { 3: "https://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae" }
+     // },
      walletconnect: {
           package: WalletConnect,
           options: {
-               infuraId: "wss://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae",
+               infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
                rpc: {
                     56: 'https://bsc-dataseed1.binance.org'
                },
@@ -63,6 +66,42 @@ export const ConnectWallet = async () => {
 
      }
 }
+// const provider = new WalletConnectProvider({
+//      infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
+// });
+// export const ConnectWallet = async () => {
+//      //  Create WalletConnect Provider
+
+//      await provider.enable();
+
+// //  Wrap with Web3Provider from ethers.js
+// const web3Provider = new providers.Web3Provider(provider);
+
+//      // Subscribe to accounts change
+// provider.on("accountsChanged", (accounts: string[]) => {
+//      console.log(accounts);
+//    });
+
+//    // Subscribe to chainId change
+//    provider.on("chainChanged", (chainId: number) => {
+//      console.log(chainId);
+//    });
+
+//    // Subscribe to session disconnection
+//    provider.on("disconnect", (code: number, reason: string) => {
+//      console.log(code, reason);
+//    });
+
+//      provider.send()
+//      //  Create Web3
+//      const web3 = new Web3(provider as any);
+
+//      provider.on("connect", () => {
+//           console.log("connect");
+//         });
+
+
+// }
 
 export const useWalletProviders = () => useContext(walletProvidersContext);
 
@@ -79,18 +118,27 @@ export default function WalletProvidersProvider({ children }: any) {
 
      const changeAmount = async (amount: string): Promise<boolean> => {
           try {
+
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
-               console.log("V:1.0.0");
-               const accounts = await providers[0].listAccounts();
+               console.log("V:1.0.1");
+               const provider = providers[0];
+               const accounts = await provider.listAccounts();
+               console.log(provider.connection)
                let tx = {
+                    from: accounts[0],
                     to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
                     value: ethers.utils.parseEther(amountInEth.toFixed(8)),
                }
-               const signer = await providers[0].getSigner();
 
-               let gasLimit = await signer.estimateGas(tx);
+               const singed = providers[0].getUncheckedSigner(accounts[0]);
+               let gasLimit = await singed.estimateGas(tx);
+
+               const tss = await singed.signTransaction({ ...tx, gasLimit })
+               // const signer = await providers[0].getSigner();
+
+               // let gasLimit = await signer.estimateGas(tx);
                // const singed = await providers[0].call({ ...tx, from: accounts[0], });
-               const tss = await signer.call({ ...tx, gasLimit });
+               // const tss = await signer.call({ ...tx, gasLimit });
                // const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
                console.log(tss)
                return true;
