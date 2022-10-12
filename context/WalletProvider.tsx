@@ -14,6 +14,7 @@ interface IProps {
      providers: Array<ethers.providers.Web3Provider>,
      accounts: Array<String>,
      ethInUsd: number,
+     disconnectWallet: () => void,
      changeAmount: (amount: string) => Promise<boolean>,
      updateProviders: (provider: ethers.providers.Web3Provider) => void
 }
@@ -22,7 +23,7 @@ const initialState: IProps = {
      providers: [],
      accounts: [],
      ethInUsd: 0,
-
+     disconnectWallet: null as any,
      changeAmount: null as any,
      updateProviders: null as any
 }
@@ -67,6 +68,8 @@ export const ConnectWallet = async () => {
 
      }
 }
+
+
 // const provider = new WalletConnectProvider({
 //      infuraId: "27e484dcd9e3efcfd25a83a78777cdf1",
 // });
@@ -161,11 +164,19 @@ export default function WalletProvidersProvider({ children }: any) {
           }
      }
 
+     const disconnectWallet = async () => {
+          try {
+               setProviders([]);
+               setAccounts([]);
+          } catch (error) {
+
+          }
+     }
      const updateProvider = (provider: ethers.providers.Web3Provider) => {
           setProviders([provider]);
      }
 
-     const value: IProps = { providers, accounts, changeAmount, updateProviders: updateProvider, ethInUsd };
+     const value: IProps = { providers, accounts, changeAmount, disconnectWallet, updateProviders: updateProvider, ethInUsd };
 
      useEffect(() => {
 

@@ -79,6 +79,7 @@ export default function UploadNFTButton() {
                const nfts = await uploadFiles(Object.values(newForm))
                await saveNft(nfts);
 
+               setIsDialogOpned(false);
                // console.log(transaction);
 
           } catch (error) {
