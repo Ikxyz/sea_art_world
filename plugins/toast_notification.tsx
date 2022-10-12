@@ -37,6 +37,6 @@ const handlePromiseToast = ({ promise }: IOptions) => {
 
 export default function ToastNotification() {
   return (
-    <Toaster position='top-right' reverseOrder={false} />
+    <Toaster position='bottom-right' reverseOrder={false} />
   )
 }
