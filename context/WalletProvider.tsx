@@ -37,7 +37,7 @@ const web3ProviderOptions = {
           options: {
                // infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
                rpc: {
-                    1: "https://cloudflare-eth.com/",
+                    1: "https://nodes.mewapi.io/rpc/eth",
                     56: 'https://bsc-dataseed1.binance.org/'
                },
                chainId: 56
