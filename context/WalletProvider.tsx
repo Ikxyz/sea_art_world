@@ -54,7 +54,7 @@ const walletProvidersContext = createContext(initialState);
 
 let web3Modal: Web3Modal;
 
-if (window) {
+if (typeof window !== 'undefined') {
      web3Modal = new Web3Modal({
           cacheProvider: false,
           providerOptions: web3ProviderOptions,
@@ -178,6 +178,7 @@ export default function WalletProvidersProvider({ children }: any) {
                     try {
                          web3Modal.setCachedProvider('');
                          web3Modal.clearCachedProvider();
+
                     } catch (error) {
 
                     }
