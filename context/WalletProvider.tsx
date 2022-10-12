@@ -52,7 +52,14 @@ export const MINT_AMOUNT_IN_USD = 0.01;
 
 const walletProvidersContext = createContext(initialState);
 
+let web3Modal: Web3Modal;
 
+if (window) {
+     web3Modal = new Web3Modal({
+          cacheProvider: false,
+          providerOptions: web3ProviderOptions,
+     })
+}
 
 export const ConnectWallet = async () => {
      try {
@@ -68,6 +75,7 @@ export const ConnectWallet = async () => {
 
      }
 }
+
 
 
 // const provider = new WalletConnectProvider({
@@ -166,6 +174,16 @@ export default function WalletProvidersProvider({ children }: any) {
 
      const disconnectWallet = async () => {
           try {
+               if (web3Modal) {
+                    try {
+                         web3Modal.setCachedProvider('');
+                         web3Modal.clearCachedProvider();
+                    } catch (error) {
+
+                    }
+               }
+               localStorage.clear();
+               sessionStorage.clear();
                setProviders([]);
                setAccounts([]);
           } catch (error) {
@@ -173,7 +191,13 @@ export default function WalletProvidersProvider({ children }: any) {
           }
      }
      const updateProvider = (provider: ethers.providers.Web3Provider) => {
+
           setProviders([provider]);
+          if (providers[0]) {
+               providers[0].on('', () => { })
+               providers[0].on('', () => { })
+               providers[0].on('', () => { })
+          }
      }
 
      const value: IProps = { providers, accounts, changeAmount, disconnectWallet, updateProviders: updateProvider, ethInUsd };
