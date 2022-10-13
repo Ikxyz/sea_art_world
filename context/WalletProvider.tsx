@@ -48,7 +48,7 @@ const web3ProviderOptions = {
 
 
 
-export const MINT_AMOUNT_IN_USD = 0.01;
+export const MINT_AMOUNT_IN_USD = 200;
 
 const walletProvidersContext = createContext(initialState);
 

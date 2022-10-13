@@ -30,6 +30,10 @@ const NavLinks = [
 
 const _REFRESH_TIME = 30 * 1000;
 
+var Tawk_API: any = Tawk_API || {},
+  Tawk_LoadStart = new Date();
+
+
 export default function Layout({ children }: { children: any }) {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((e: RootState) => e.auth);
@@ -39,7 +43,16 @@ export default function Layout({ children }: { children: any }) {
   const openAndCloseSideBar = () => {
     dispatch(toggleSidebar());
   };
-
+  useEffect(() => {
+    (function () {
+      let s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0] as any;
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6347380254f06e12d899ddba/1gf735k3f';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })()
+  }, []);
   useEffect(() => {
     dispatch(loadFromCache());
 
@@ -92,6 +105,7 @@ export default function Layout({ children }: { children: any }) {
         {/* <Footer /> */}
       </div>
     </div>
+
 
 
   </>

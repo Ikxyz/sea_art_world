@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </WalletProvider>
+
     </Provider>
   );
 }
