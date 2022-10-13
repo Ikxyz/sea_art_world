@@ -15,10 +15,10 @@ export function Footer() {
                               </p>
                               <br />
                               <div className="flex flex-row space-x-10 ">
-                                   <img className=" h-[26px]" src={Images.youtube.src} alt="youtube logo" />
+                                   {/* <img className=" h-[26px]" src={Images.youtube.src} alt="youtube logo" />
                                    <img className=" h-[26px]" src={Images.twitter.src} alt="youtube logo" />
                                    <img className=" h-[26px]" src={Images.facebook.src} alt="youtube logo" />
-                                   <img className=" h-[26px]" src={Images.google.src} alt="youtube logo" />
+                                   <img className=" h-[26px]" src={Images.google.src} alt="youtube logo" /> */}
                               </div>
                          </header>
                     </li>
