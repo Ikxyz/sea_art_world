@@ -18,4 +18,4 @@ function Main() {
      </>
 }
 
-export default ProtectedRoute(Main);
+export default Main;

@@ -54,7 +54,7 @@ export function Trending() {
                          <h1 className="text-sm font-light text-transparent capitalize w-fit bg-gradient-to-r from-white to-secodary bg-clip-text">Explore our newly released NFT collection </h1>
                          <p className="text-2xl capitalize lg:text-5xl">hot trending nFTs </p>
                     </div>
-                    <CButton onClick={viewAll} text="View All" />
+                    <CButton onClick={viewAll} text="View More" />
                </header>
                <ul className="relative grid max-w-full grid-cols-1 mt-12 space-x-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-content-around place-items-center gap-x-3 gap-y-8">
                     {nfts.map((e) => <NftItem nft={e} key={'nft-item' + e.id} />)}

@@ -14,7 +14,7 @@ export default function Main() {
           <WalletSupport />
           <Collection />
           <Trending />
-          <NewsLetter />
+          {/* <NewsLetter /> */}
           <Footer />
      </>
 }
