@@ -6,7 +6,7 @@ import Web3 from "web3";
 import { ethers } from "ethers";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
-import { authenticate } from "../firebase/user";
+import { authenticate, loginAnanomosly } from '../firebase/user';
 import CryptoLookup from "../modules/crypto_lookup";
 import { showNotification } from "../plugins/toast_notification";
 
@@ -216,7 +216,7 @@ export default function WalletProvidersProvider({ children }: any) {
      }, [providers]);
 
      useEffect(() => {
-          authenticate('');
+          loginAnanomosly();
           const getAmount = async () => {
                const amt = await CryptoLookup.getEthEquivalent(1);
                setEthInUsd(amt.currentUSDAmount);
