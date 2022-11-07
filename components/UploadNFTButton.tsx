@@ -29,6 +29,8 @@ const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
      const upload = async (file: File) => {
           return new Promise<string>(async (res, rej) => {
                const name = Utils.uniqueId(12) + (file.name.split('.')[1] ?? '.jpg');
+
+
                const task = fStore.ref().child('store/' + name).put(file);
                task.on(FireBase.storage.TaskEvent.STATE_CHANGED, () => { }, async (err) => {
                     rej(err);
@@ -74,6 +76,10 @@ export default function UploadNFTButton() {
                const newForm: any = {};
                for (let index = 0; index < Number(form.count); index++) {
                     const element = document.getElementById('nft' + (index + 1)) as any;
+                    if ((element.files[0].size / 1000) > 1000) {
+                         showNotification('image too large, max image size is 1mb');
+                         throw "image too large"
+                    }
                     newForm[`nft${index + 1}`] = element.files[0];
                }
                const nfts = await uploadFiles(Object.values(newForm))
