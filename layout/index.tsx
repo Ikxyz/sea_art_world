@@ -16,6 +16,11 @@ import ConnectWalletButton from "../components/ConnectWalletButton";
 import UploadNFTButton from "../components/UploadNFTButton";
 import DesktopNavItem from "./desktop_nav_item";
 
+var google: any;
+
+
+
+
 const NavLinks = [
 
   { name: "My Account", route: "account", isDialog: false, protected: true },
@@ -45,6 +50,7 @@ export default function Layout({ children }: { children: any }) {
   };
   useEffect(() => {
     (function () {
+
       let s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0] as any;
       s1.async = true;
       s1.src = 'https://embed.tawk.to/6347380254f06e12d899ddba/1gf735k3f';
@@ -53,6 +59,21 @@ export default function Layout({ children }: { children: any }) {
       s0.parentNode.insertBefore(s1, s0);
     })()
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      (function () {
+        var googleTranslateElementInit = () => {
+          new (google as any).translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+        }
+        let s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0] as any;
+        s1.async = true;
+        s1.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+      })()
+    }, 3000)
+  }, [])
   useEffect(() => {
     dispatch(loadFromCache());
 
@@ -70,6 +91,7 @@ export default function Layout({ children }: { children: any }) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      <div id="google_translate_element"></div>
       <div className="relative w-full h-full ">
 
         {/* Desktop Nav Bar */}
