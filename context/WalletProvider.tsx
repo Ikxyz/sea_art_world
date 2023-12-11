@@ -39,7 +39,7 @@ const web3ProviderOptions = {
                // infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
                rpc: {
                     1: "https://rpc.ankr.com/eth",
-                    56: 'https://bsc-dataseed1.binance.org/'
+                    56: 'https://rpc.coinsdo.net/bsc'
                },
                chainId: 56
           }
