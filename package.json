@@ -53,6 +53,6 @@
 		"styled-components": "^5"
 	},
 	"engines": {
-		"node": "18.12.1"
+		"node": "18.*.*"
 	}
 }
