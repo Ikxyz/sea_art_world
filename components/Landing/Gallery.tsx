@@ -15,7 +15,7 @@ export interface INFT {
 
 export function Gallery() {
 
-     const { changeAmount, accounts } = useWalletProviders();
+     const { changeAmount } = useWalletProviders();
      const [nfts, setNFTs] = useState<Array<IGallery>>([]);
 
      useEffect(() => {

@@ -1,20 +1,20 @@
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { ActionCreator } from 'redux';
 import { useWalletProviders } from '../context/WalletProvider';
 import { RootState } from '../store';
 import { gotoEmailVerification, gotoPhoneNumberVerification, gotoSetupPin } from '../store/slices/onboarding';
+import { getAccount } from '@wagmi/core';
 
 export function GotoDashboardIfAuthenticated(Component: any) {
   return function WithGuard(props: any) {
 
-    const { accounts } = useWalletProviders();
+    const {  isConnected } = getAccount();
 
     const router = useRouter();
 
     if (typeof window !== 'undefined') {
-      if (accounts.length > 0) {
+      if (isConnected) {
         router.replace('/');
         return <></>
       }
@@ -29,12 +29,13 @@ export function GotoDashboardIfAuthenticated(Component: any) {
 export function ProtectedRoute(Component: any) {
   return function WithProtection(props: any) {
 
-    const { accounts } = useWalletProviders();
+    // const { accounts } = useWalletProviders();
+    const {  isConnected } = getAccount();
     const router = useRouter();
 
     if (typeof window !== 'undefined') {
 
-      if (!accounts || accounts.length === 0) {
+      if (!isConnected) {
         router.replace('/');
         return <></>
       }

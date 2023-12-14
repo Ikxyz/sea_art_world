@@ -1,80 +1,99 @@
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { providers } from "ethers";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import WalletConnect from "@walletconnect/web3-provider";
-import Web3 from "web3";
+// import WalletConnectProvider from "@walletconnect/web3-provider";
+// import WalletConnect from "@walletconnect/web3-provider";
+// import Web3 from "web3";
 import { ethers } from "ethers";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import Web3Modal from "web3modal";
-import { authenticate, loginAnanomosly } from '../firebase/user';
+
+import { authenticate, loginAnanomosly as loginAnonymously } from '../firebase/user';
 import CryptoLookup from "../modules/crypto_lookup";
 import { showNotification } from "../plugins/toast_notification";
+import { WagmiConfig, configureChains, createConfig, mainnet, useAccount, useDisconnect } from "wagmi";
+
+import { publicProvider } from 'wagmi/providers/public'
+import { sendTransaction } from '@wagmi/core'
+import * as Viem from "viem";
+
 
 interface IProps {
-     providers: Array<ethers.providers.Web3Provider>,
-     accounts: Array<String>,
      ethInUsd: number,
      disconnectWallet: () => void,
      changeAmount: (amount: string) => Promise<boolean>,
-     updateProviders: (provider: ethers.providers.Web3Provider) => void
 }
 
 const initialState: IProps = {
-     providers: [],
-     accounts: [],
      ethInUsd: 0,
      disconnectWallet: null as any,
      changeAmount: null as any,
-     updateProviders: null as any
 }
-const web3ProviderOptions = {
-     // coinbasewallet: {
-     //      package: CoinbaseWalletSDK,
-     //      appName: "Sea World Art",
-     //      infuraId: { 3: "https://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae" }
-     // },
-     walletconnect: {
-          package: WalletConnect,
-          options: {
-               // infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
-               rpc: {
-                    1: "https://rpc.ankr.com/eth",
-                    56: 'https://rpc.coinsdo.net/bsc'
-               },
-               chainId: 56
-          }
-     },
-};
+
+// 1. Get projectId at https://cloud.walletconnect.com
+const projectId = '39e18a7dce4aae7c7b0f6aa82f06175c'
+
+// 2. Create wagmiConfig
+const metadata = {
+     name: 'Sea Art World Gallery',
+     description: 'Connect wallet',
+     url: 'https://web3modal.com',
+     icons: ['https://www.seaartworldgallery.com/_next/static/media/logo-full.f92d579b.png']
+}
+
+// const chains = [mainnet]
+// const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+
+
+// createWeb3Modal({ wagmiConfig, projectId, chains })
+
+// const web3ProviderOptions = {
+//      // coinbasewallet: {
+//      //      package: CoinbaseWalletSDK,
+//      //      appName: "Sea World Art",
+//      //      infuraId: { 3: "https://mainnet.infura.io/v3/c867b7b48b3d48b38de4c5edae4b40ae" }
+//      // },
+//      walletconnect: {
+//           package: WalletConnect,
+//           ethers
+//           options: {
+//                // infuraId: "wss://mainnet.infura.io/ws/v3/c867b7b48b3d48b38de4c5edae4b40ae",
+//                rpc: {
+//                     1: "https://rpc.ankr.com/eth",
+//                     56: 'https://rpc.coinsdo.net/bsc'
+//                },
+//                chainId: 56
+//           }
+//      },
+// };
 
 
 
-export const MINT_AMOUNT_IN_USD = 200;
+export const MINT_AMOUNT_IN_USD = 199;
 
 const walletProvidersContext = createContext(initialState);
 
-let web3Modal: Web3Modal;
+// let web3Modal: Web3Modal;
 
 if (typeof window !== 'undefined') {
-     web3Modal = new Web3Modal({
-          cacheProvider: false,
-          providerOptions: web3ProviderOptions,
-     })
+     // web3Modal = new Web3Modal({
+     //      cacheProvider: false,
+     //      providerOptions: web3ProviderOptions,
+     // })
 }
 
-export const ConnectWallet = async () => {
-     try {
-          const web3Modal = new Web3Modal({
-               cacheProvider: false,
-               providerOptions: web3ProviderOptions,
-          })
-          const web3ModalInatsnace = await web3Modal.connect();
-          const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInatsnace);
+// export const ConnectWallet = async () => {
+//      try {
+//           // const web3Modal = new Web3Modal({
+//           //      cacheProvider: false,
+//           //      providerOptions: web3ProviderOptions,
+//           // })
+//           // const web3ModalInatsnace = await web3Modal.connect();
+//           // const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInatsnace);
 
-          return web3ModalProvider;
-     } catch (error) {
+//           return web3ModalProvider;
+//      } catch (error) {
 
-     }
-}
+//      }
+// }
 
 
 
@@ -123,22 +142,19 @@ export const useWalletProviders = () => useContext(walletProvidersContext);
 
 export default function WalletProvidersProvider({ children }: any) {
 
-     const [providers, setProviders] = useState<Array<ethers.providers.Web3Provider>>([]);
 
-     const [accounts, setAccounts] = useState<Array<String>>([]);
      const [ethInUsd, setEthInUsd] = useState<number>(0);
+     const { disconnect } = useDisconnect()
+     const { address, isConnecting, isDisconnected } = useAccount();
 
      const changeAmount = async (amount: string): Promise<boolean> => {
           try {
 
                const { amountInEth } = await CryptoLookup.getEthEquivalent(Number(amount));
                console.log("V:1.0.5");
-               const provider = providers[0];
-               const accounts = await provider.listAccounts();
-               console.log(provider.connection)
                let tx = {
-                    from: accounts[0],
-                    to: "0xaFF64072c9c6EE1a5532D052E2E78274332D5C01",
+                    from: address,
+                    to: "0xbcf371e8Ae83D2e93f1564922223503BaC8CE517",
                     value: ethers.utils.parseEther(amountInEth.toFixed(8)),
                }
 
@@ -146,12 +162,16 @@ export default function WalletProvidersProvider({ children }: any) {
                // let gasLimit = await singed.estimateGas(tx);
 
                // const tss = await singed.signTransaction({ ...tx, gasLimit })
-               const signer = await provider.getSigner();
+               // const signer = await provider.getSigner();
 
-               let gasLimit = await signer.estimateGas(tx);
+               // let gasLimit = await signer.estimateGas(tx);
                // const singed = await providers[0].call({ ...tx, from: accounts[0], });
                // const tss = await signer.call({ ...tx, gasLimit });
-               const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
+               const tss = await sendTransaction({
+                    to: tx.to,
+                    value: Viem.parseEther(amountInEth.toString()),
+               })
+               // const tss = await signer.sendUncheckedTransaction({ ...tx, gasLimit });
                console.log(tss)
                return true;
           } catch (error) {
@@ -162,9 +182,9 @@ export default function WalletProvidersProvider({ children }: any) {
 
                     const message = err?.message as String;
                     if (message.includes('insufficient')) {
-                         showNotification('insufficient funds to procces transaction');
+                         showNotification('insufficient funds to process transaction');
                     } else {
-                         showNotification('unable procces transaction');
+                         showNotification('unable process transaction');
 
                     }
                }
@@ -174,49 +194,29 @@ export default function WalletProvidersProvider({ children }: any) {
 
      const disconnectWallet = async () => {
           try {
-               if (web3Modal) {
-                    try {
-                         web3Modal.setCachedProvider('');
-                         web3Modal.clearCachedProvider();
+               // if (web3Modal) {
+               //      try {
+               //           web3Modal.setCachedProvider('');
+               //           web3Modal.clearCachedProvider();
 
-                    } catch (error) {
+               //      } catch (error) {
 
-                    }
-               }
+               //      }
+               // }
+               await disconnect();
                localStorage.clear();
                sessionStorage.clear();
-               setProviders([]);
-               setAccounts([]);
           } catch (error) {
 
           }
      }
-     const updateProvider = (provider: ethers.providers.Web3Provider) => {
 
-          setProviders([provider]);
-          if (providers[0]) {
-               providers[0].on('', () => { })
-               providers[0].on('', () => { })
-               providers[0].on('', () => { })
-          }
-     }
 
-     const value: IProps = { providers, accounts, changeAmount, disconnectWallet, updateProviders: updateProvider, ethInUsd };
+     const value: IProps = { changeAmount, disconnectWallet, ethInUsd };
+
 
      useEffect(() => {
-
-          if (providers.length > 0) {
-               providers[0].listAccounts().then((accounts) => {
-                    if (accounts.length > 0) {
-                         authenticate(accounts[0]);
-                    }
-                    setAccounts(accounts);
-               });
-          }
-     }, [providers]);
-
-     useEffect(() => {
-          loginAnanomosly();
+          loginAnonymously();
           const getAmount = async () => {
                const amt = await CryptoLookup.getEthEquivalent(1);
                setEthInUsd(amt.currentUSDAmount);
@@ -225,8 +225,9 @@ export default function WalletProvidersProvider({ children }: any) {
           const interfavId = setInterval(getAmount, 15 * 1000);
           return () => clearInterval(interfavId);
      }, [])
-
      return <walletProvidersContext.Provider value={value}>
           {children}
      </walletProvidersContext.Provider>
+
+
 }

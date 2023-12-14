@@ -6,10 +6,11 @@ import { IGallery, updateGalleryDoc } from "../../firebase/gallery";
 import Utils from "../../modules/utils";
 import { showNotification } from "../../plugins/toast_notification";
 import CButton from "../Button";
+import { useAccount } from "wagmi";
 
 export default function NftItem({ nft }: { nft: IGallery }) {
-     const { changeAmount, accounts, ethInUsd } = useWalletProviders();
-
+     const { changeAmount, ethInUsd } = useWalletProviders();
+const {address} = useAccount()
      const user = fAuth.currentUser;
 
      const [isLoading, setIsloading] = useState(false);
@@ -24,7 +25,7 @@ export default function NftItem({ nft }: { nft: IGallery }) {
                if ((await changeAmount((Number(gallery.amount) * ethInUsd).toString())) === false) throw { message: "Transaction failed" };
                await updateGalleryDoc(gallery.id, {
                     author: user.uid,
-                    authorAddress: accounts[0]
+                    authorAddress: `${address}`
                });
           } catch (error) {
                showNotification((error as any)?.message ?? error);

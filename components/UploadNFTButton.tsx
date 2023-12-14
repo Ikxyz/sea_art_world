@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ConnectWallet, MINT_AMOUNT_IN_USD, useWalletProviders } from "../context/WalletProvider";
+import { MINT_AMOUNT_IN_USD, useWalletProviders } from "../context/WalletProvider";
 import { fAuth, FireBase, fStore } from "../firebase/config";
 import { uploadGalleryItem } from "../firebase/gallery";
 import OnInputChange from "../modules/inputEvent";
@@ -10,6 +10,7 @@ import { showNotification } from "../plugins/toast_notification";
 import CButton from "./Button";
 import Dialog from "./Dialog";
 import RenderIf from "./RenderIf";
+import { useAccount } from "wagmi";
 
 
 interface IForm {
@@ -45,29 +46,28 @@ const uploadFiles = async (files: Array<File>): Promise<Array<string>> => {
 
 
 export default function UploadNFTButton() {
-     const { updateProviders, changeAmount, providers, accounts, ethInUsd } = useWalletProviders();
-
-     const [isDialogOpned, setIsDialogOpned] = useState<boolean>(false);
+     const { changeAmount, ethInUsd } = useWalletProviders();
+     const { address, isConnected } = useAccount();
+     const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false);
      const [isUploading, setIsUploading] = useState<boolean>(false);
 
 
      const [form, setForm] = useState<IForm>({ count: 1 } as any);
 
-     const connetedAccountString = accounts.length > 0 ? accounts[0].substring(0, 10) : '';
      const onInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => OnInputChange(e, form, setForm);
 
 
      const saveNft = async (nfts: Array<string>) => {
           const ipInfo = await getIpInfo();
           const user = fAuth.currentUser;
-          await uploadGalleryItem({ id: Utils.uniqueId(12), amount: form.amount, authorAddress: accounts[0] as string, authorUid: user?.uid ?? '', nfts, metadata: { ip: ipInfo } });
-          showNotification("NFT Miniting Complete")
+          await uploadGalleryItem({ id: Utils.uniqueId(12), amount: form.amount, authorAddress: address ?? '', authorUid: user?.uid ?? '', nfts, metadata: { ip: ipInfo } });
+          showNotification("NFT Minting Complete")
      }
 
      const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
           e.preventDefault();
 
-          if (!connetedAccountString) return showNotification('connect wallet to proccess transaction');
+          if (!isConnected) return showNotification('connect wallet to process transaction');
 
           if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
@@ -85,7 +85,7 @@ export default function UploadNFTButton() {
                const nfts = await uploadFiles(Object.values(newForm))
                await saveNft(nfts);
 
-               setIsDialogOpned(false);
+               setIsDialogOpened(false);
                // console.log(transaction);
 
           } catch (error) {
@@ -115,9 +115,9 @@ export default function UploadNFTButton() {
 
 
      return <>
-          <RenderIf isTrue={isDialogOpned}>
+          <RenderIf isTrue={isDialogOpened}>
 
-               <Dialog isOpened={isDialogOpned} bringToFront={80} onClose={() => setIsDialogOpned(false)}>
+               <Dialog isOpened={isDialogOpened} bringToFront={80} onClose={() => setIsDialogOpened(false)}>
                     <div className="flex flex-col bg-primary   w-[430px]  text-white rounded-3xl box-border">
                          <div className="flex items-center h-24 px-6 bg-primary">
                               <p className="mx-auto text-lg font-bold text-white">NFT Upload</p>
@@ -139,7 +139,7 @@ export default function UploadNFTButton() {
                                    <br />
                                    <div>
                                         <label htmlFor="count">Select Numbers of NFT your will like to mint</label>
-                                        <select required name="count" onChange={onInputChange} id="count" placeholder="" className="" >
+                                        <select required name="count" onChange={onInputChange} id="count"   >
                                              <option value="1" >Only One NFT</option>
                                              <option value="2">I will like to mint two (2) NFTs</option>
                                              <option value="3">I will like to mint three (3) NFTs</option>
@@ -162,7 +162,7 @@ export default function UploadNFTButton() {
                                    <br />
 
                                    <div className="flex flex-wrap content-between justify-between min-w-full space-y-3 xs:space-x-3 xs:space-y-0">
-                                        <CButton text="close" type="button" outlined onClick={() => setIsDialogOpned(false)} />
+                                        <CButton text="close" type="button" outlined onClick={() => setIsDialogOpened(false)} />
                                         <CButton text="Start Minting" isLoading={isUploading} />
 
                                    </div>
@@ -175,6 +175,6 @@ export default function UploadNFTButton() {
                     </div>
                </Dialog>
           </RenderIf>
-          <CButton text="Upload Your NFT" onClick={() => setIsDialogOpned(true)} center={false} />
+          <CButton text="Upload Your NFT" onClick={() => setIsDialogOpened(true)} center={false} />
      </>
 }

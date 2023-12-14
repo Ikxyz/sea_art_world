@@ -11,7 +11,7 @@ import NftItem from "./NftItem"
 
 export function MyAccount() {
 
-     const { changeAmount, accounts } = useWalletProviders();
+     const { changeAmount } = useWalletProviders();
      const [nfts, setNFTs] = useState<Array<IGallery>>([]);
 
      useEffect(() => {
@@ -33,7 +33,7 @@ export function MyAccount() {
      return <>
           <section className="relative w-full text-white lg:pl-[135px] lg:pr-[20px]  pr-30px mt-[140px]">
                <header className="flex flex-row lg:pl-[135px] px-[30px] items-center content-center justify-center w-full p-3 ">
-                    <div className="text-center  w-fit">
+                    <div className="text-center w-fit">
                          <h1 className="text-sm font-light text-transparent capitalize w-fit bg-gradient-to-r from-white to-secodary bg-clip-text">Here you can view your nft collections, incliding thr onces you purchased
 
                          </h1>

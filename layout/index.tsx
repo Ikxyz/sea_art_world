@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import Link from "next/link";
-import { useDispatch, useSelector } from 'react-redux';
 import Images from "../assets/images";
 import { toggleSidebar } from "../store/slices/navigation";
 import Sidebar from "./sidebar";
@@ -15,6 +14,7 @@ import { Footer } from "../components/Footer";
 import ConnectWalletButton from "../components/ConnectWalletButton";
 import UploadNFTButton from "../components/UploadNFTButton";
 import DesktopNavItem from "./desktop_nav_item";
+import { useDispatch, useSelector } from "react-redux";
 
 var google: any;
 

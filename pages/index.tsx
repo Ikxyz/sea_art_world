@@ -5,16 +5,18 @@ import { NewsLetter } from "../components/Landing/NewsLetter";
 import { Trending } from "../components/Landing/Trending";
 import { WalletSupport } from "../components/Landing/WalletSupport";
 
+
 export default function Main() {
 
 
 
      return <>
-          <Hero />
-          <WalletSupport />
-          <Collection />
-          <Trending />
-          {/* <NewsLetter /> */}
-          <Footer />
+               <Hero />
+               <WalletSupport />
+               <Collection />
+               <Trending />
+               {/* <NewsLetter /> */}
+               <Footer />
+
      </>
 }

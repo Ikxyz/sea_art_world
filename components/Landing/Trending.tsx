@@ -26,7 +26,7 @@ const NFTs: Array<INFT> = [
 ]
 export function Trending() {
 
-     const { changeAmount, accounts } = useWalletProviders();
+     const { changeAmount } = useWalletProviders();
      const [nfts, setNFTs] = useState<Array<IGallery>>([]);
      const router = useRouter();
 

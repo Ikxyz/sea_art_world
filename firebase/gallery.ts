@@ -68,7 +68,7 @@ export const fetchGalleyByAuthorSnapshot = (uid: string) => {
   return fDb.collection(GalleryCollectionName).where('author', '==', uid);
 };
 export const fetchGalleyByWalletAddress = async (address: string): Promise<IGallery | null> => {
-  const galleryItemDoc = await fDb.collection(GalleryCollectionName).where('authorAddress', '==', address).get();
+  const galleryItemDoc = await fDb.collection(GalleryCollectionName).where('authorAddress', '==',  `${address}`).get();
   if (galleryItemDoc.size === 0) return null;
   return galleryItemDoc.docs[0].data() as IGallery;
 };

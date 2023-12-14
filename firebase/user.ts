@@ -20,12 +20,12 @@ export const authenticate = async (address: string) => {
   const userExist = await fetchUserByAddress(address);
 
   if (!userExist) {
-    return await cerateAccountWithWalletAddress(address);
+    return await cerateAccountWithWalletAddress( `${address}`);
   }
   return userExist;
 }
 
-const getLoginCredencails = (address: string) => {
+const getLoginCredentials = (address: string) => {
   if (!address) return [];
   const pwd = Encrypt.hash(address.substring(address.length / 2), 'sha256');
   let host = location.hostname;
@@ -35,7 +35,7 @@ const getLoginCredencails = (address: string) => {
   return [email, pwd];
 }
 export const cerateAccountWithWalletAddress = async (address: string) => {
-  const [email, pwd] = getLoginCredencails(address);
+  const [email, pwd] = getLoginCredentials(address);
   if (!email || !pwd) return;
   const credentials = FireBase.auth.EmailAuthProvider.credential(email, pwd);
   const user = await fAuth.currentUser?.linkWithCredential(credentials);
@@ -52,7 +52,7 @@ export const cerateAccountWithWalletAddress = async (address: string) => {
   return userData;
 }
 export const logintWithWalletAddress = async (address: string) => {
-  const [email, pwd] = getLoginCredencails(address);
+  const [email, pwd] = getLoginCredentials(address);
   return await fAuth.signInWithEmailAndPassword(email, pwd);
 }
 export const fetchUser = async (uid: string): Promise<UserModel | null> => {
