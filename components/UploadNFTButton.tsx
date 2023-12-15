@@ -72,7 +72,7 @@ export default function UploadNFTButton() {
           if (!form.amount) return showNotification("Amount is required");
           setIsUploading(true);
           try {
-               // if ((await changeAmount((MINT_AMOUNT_IN_USD * Number(form.count)).toString())) === false) throw setIsUploading(false);
+               if ((await changeAmount((MINT_AMOUNT_IN_USD * Number(form.count)).toString())) === false) throw setIsUploading(false);
                const newForm: any = {};
                for (let index = 0; index < Number(form.count); index++) {
                     const element = document.getElementById('nft' + (index + 1)) as any;
