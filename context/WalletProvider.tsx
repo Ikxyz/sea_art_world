@@ -67,7 +67,7 @@ const metadata = {
 
 
 
-export const MINT_AMOUNT_IN_USD = 0.1;
+export const MINT_AMOUNT_IN_USD = 199;
 
 const walletProvidersContext = createContext(initialState);
 
